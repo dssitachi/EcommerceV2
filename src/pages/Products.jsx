@@ -1,3 +1,4 @@
+import Product from "../components/Product"
 
 function Products() {
     var a = [1, 2, 3, 1, 2, 23, 23, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]
@@ -7,7 +8,7 @@ function Products() {
         <main className="mx-auto min-h-screen flex gap-4 max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
 
             {/* Filter */}
-            <section className="hidden sm:block">
+            <section className="hidden sm:block min-w-60">
                 <div className="flex justify-between items-center">
                     <h2>Filters</h2>
                     <span>Clear Filter</span>
@@ -51,7 +52,7 @@ function Products() {
             {/* Products */}
             <section className="flex-[3_0_0%] grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
                 {a.map(x => {
-                    return <div className="w-10 h-10 bg-[#ff0000]"> Helo</div>
+                    return <Product />
                 })}
             </section>
 
