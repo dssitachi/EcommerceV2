@@ -1,5 +1,6 @@
 import productImg from '../assets/images/arm-chair-01.jpg'
 import { AiOutlineHeart } from 'react-icons/ai';
+
 function Product() {
   return (
     <div>
@@ -14,6 +15,7 @@ function Product() {
         <div>
             <span>$231</span>
         </div>
+        
     </div>
   )
 }
