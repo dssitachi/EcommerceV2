@@ -6,7 +6,7 @@ function Products() {
 
     return (
         // Container
-        <main className="mx-auto min-h-screen flex sm:gap-4 max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+        <main className="mx-auto min-h-screen flex sm:gap-4 py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
 
             {/* Filter */}
             <Filter />

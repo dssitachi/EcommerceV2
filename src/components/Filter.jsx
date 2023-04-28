@@ -12,7 +12,7 @@ function Filter() {
 
     return (
         <>
-            <section className="hidden sm:block sm:min-w-sm">
+            <section className="hidden sm:block sm:min-w-[200px]">
                 <div className="flex justify-between items-center">
                     <h2>Filters</h2>
                     <span>Clear Filter</span>
@@ -53,7 +53,6 @@ function Filter() {
                     </div>
 
                 </div>
-
 
             </section>
 
@@ -97,12 +96,6 @@ function Filter() {
 
                             </ul>
                         </div>
-
-                        {/* Slider */}
-                        <div className="p-4 rounded-lg shadow">
-
-                        </div>
-
                     </div>
 
                 </div>
