@@ -1,7 +1,7 @@
 
 function ProductDetails() {
     return (
-        <section className="min-h-screen mx-auto py-12 px-4 sm:py-16 sm:px-6 lg:max-w-7xl lg:px-8">
+        <section className="min-h-screen mt-12 mx-auto py-12 px-4 sm:py-16 sm:px-6 lg:max-w-7xl lg:px-8">
             <div className="mt-6 flex flex-col md:flex-row">
                 <div className="md:w-1/2">
                     <img

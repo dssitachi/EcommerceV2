@@ -18,12 +18,12 @@ function Product() {
       </div>
 
       <div className="p-4">
-        <p className="uppercase font-bold text-xs text-slate-500">Appliances</p>
-        <div className="flex justify-between items-center gap-2">
-          <h3 className="text-lg font-bold">Chair</h3>
+        <div className="flex justify-between items-center gap-2 pb-1">
+          <h3 className="text-sm font-bold">Roadster</h3>
           <AiOutlineHeart className="text-2xl cursor-pointer" />
         </div>
-        <span>$231</span>
+        <p className="text-xs text-slate-500">Men's Solid Cotton T-shirt</p>
+        <span className="text-xs font-bold">$231</span>
       </div>
 
     </div>
