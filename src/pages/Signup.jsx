@@ -17,7 +17,7 @@ function Signup() {
                 <div className="text-center">
                     <div className="mt-5 space-y-2">
                         <h3 className="text-2xl font-bold sm:text-3xl">Sign Up</h3>
-                        <p className="">Already have an account? <a href="#" className="font-medium text-primary hover:primary-focus">Login</a></p>
+                        <p className="">Already have an account? <span  className="font-medium text-primary hover:primary-focus">Login</span></p>
                     </div>
                 </div>
                 <form

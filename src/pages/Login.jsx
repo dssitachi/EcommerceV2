@@ -39,7 +39,7 @@ function Login() {
                         Sign in
                     </button>
                     <div className="text-center">
-                        <a href="javascript:void(0)" className="hover:text-indigo-600">Forgot password?</a>
+                        <span className="hover:text-indigo-600">Forgot password?</span>
                     </div>
                 </form>
             </div>

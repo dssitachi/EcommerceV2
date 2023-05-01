@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { AiOutlineShopping, AiOutlineHeart, AiOutlineUser } from 'react-icons/ai';
+
 function Navbar() {
 
     return (

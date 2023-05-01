@@ -34,24 +34,16 @@ function Footer() {
                 <div className="mt-6 sm:mt-0">
                     <ul className="flex items-center space-x-4">
                         <li className="w-10 h-10 border rounded-full flex items-center justify-center">
-                            <a href="#">
-
-                            </a>
+                            
                         </li>
                         <li className="w-10 h-10 border rounded-full flex items-center justify-center">
-                            <a href="#">
-
-                            </a>
+                          
                         </li>
                         <li className="w-10 h-10 border rounded-full flex items-center justify-center">
-                            <a href="#">
-
-                            </a>
+                           
                         </li>
                         <li className="w-10 h-10 border rounded-full flex items-center justify-center">
-                            <a href="#">
-
-                            </a>
+                            
                         </li>
                     </ul>
                 </div>
