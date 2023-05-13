@@ -2,8 +2,7 @@ import productImg from '../assets/images/arm-chair-01.jpg'
 import { AiOutlineHeart } from 'react-icons/ai';
 import { useNavigate } from "react-router-dom";
 
-function Product() {
-
+function Product({product}) {
   const navigate = useNavigate();
   
   function routeToProductDetail(id) {

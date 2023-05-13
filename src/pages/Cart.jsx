@@ -1,7 +1,13 @@
+import { useEffect } from "react"
 
 function Cart() {
+
+  // useEffect(async function fetchCart() {
+    
+  // }, []);
+
   return (
-    <div>Cart</div>
+    <div>Cart is here</div>
   )
 }
 

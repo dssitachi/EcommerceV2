@@ -6,11 +6,12 @@ import ProductDetails from './pages/ProductDetails';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Footer from './components/Footer';
+import Cart from './pages/Cart';
 
 function App() {
 
     return (
-        <div>
+        <>
             <Router>
                 <Navbar />
                 <Routes>
@@ -19,12 +20,13 @@ function App() {
                     <Route path="/product/:id" element={<ProductDetails />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
+                    <Route path="/cart" element={<Cart />} />
                     {/* <Route path='/checkout/success' element={<CheckoutSuccess />} /> */}
                 </Routes>
                 {/* <Sidebar /> */}
                 <Footer />
             </Router>
-        </div>
+        </>
     )
 }
 
