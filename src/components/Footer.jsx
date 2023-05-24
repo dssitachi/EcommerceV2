@@ -10,7 +10,7 @@ function Footer() {
     ]
 
     return (
-        <footer className="bg-base-200 px-4 py-5 mmax-w-7xl mx-auto sm:px-6 lg:px-8">
+        <footer className="bg-base-200 px-4 py-5 max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div className="max-w-lg sm:mx-auto sm:text-center">
                 <p className="leading-relaxed mt-2 text-sm">
                     Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.

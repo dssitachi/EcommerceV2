@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Footer from './components/Footer';
 import Cart from './pages/Cart';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
 
@@ -24,8 +25,9 @@ function App() {
                     {/* <Route path='/checkout/success' element={<CheckoutSuccess />} /> */}
                 </Routes>
                 {/* <Sidebar /> */}
-                <Footer />
+                
             </Router>
+            <ToastContainer />
         </>
     )
 }

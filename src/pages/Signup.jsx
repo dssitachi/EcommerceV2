@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 import axios from "axios";
+import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 function Signup() {
 
@@ -13,9 +15,14 @@ function Signup() {
     async function registerUser(data) {
         try {
             var response = await axios.post('http://localhost:3000/users/signup', data);
-            console.log(response.data);
+            toast.success("Account Created!", {
+                position: toast.POSITION.TOP_RIGHT
+            });
+            navigate('/login');
         } catch (error) {
-            console.error(error);
+            toast.error(error.response.data.message, {
+                position: toast.POSITION.TOP_RIGHT
+            });
         }
     }
 
@@ -42,7 +49,7 @@ function Signup() {
                             })}
                             className="w-full mt-2 px-3 py-2 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                         />
-                        <p>{errors.email?.message}</p>
+                        <p className="text-xs text-red-600 pt-1">{errors.email?.message}</p>
                     </div>
                     <div>
                         <label htmlFor="password" className="font-medium">Password</label>
@@ -52,7 +59,7 @@ function Signup() {
                             })}
                             className="w-full mt-2 px-3 py-2 bg-transparent outline-none border focus:border-red shadow-sm rounded-lg"
                         />
-                        <p>{errors.password?.message}</p>
+                        <p className="text-xs text-red-600 pt-1">{errors.password?.message}</p>
                     </div>
                     <button className="w-full px-4 py-2 text-white font-medium bg-primary-focus hover:bg-primary rounded-lg duration-150">
                         Create Account
@@ -61,6 +68,7 @@ function Signup() {
                 </form>
                 <DevTool control={control} />
             </div>
+            
         </section>
     )
 }

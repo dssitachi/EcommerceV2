@@ -3,26 +3,47 @@ import { setCookie } from '../hooks/useCookie';
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 import axios from "axios";
+import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import { useContext, useState } from "react";
+import  Loader from '../components/Loader';
+import { UserContext } from "../contexts/UserContext";
+import { d } from '../utils/products';
 
 function Login() {
 
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
     const navigate = useNavigate();
+    const { setAccessToken } = useContext(UserContext);
+
     const form = useForm();
     var { register, control, handleSubmit, formState } = form;
     var { errors } = formState;
 
     async function login(data) {
         try {
+            setLoading(true);
             var response = await axios.post('http://localhost:3000/users/login', data);
-            
-            setCookie()
+            toast.success("Logged In successfully!", {
+                position: toast.POSITION.TOP_RIGHT
+            });
+            setAccessToken(response.data.access_token)
+            // var s = await axios.post('http://localhost:3000/products/add', d);
+            navigate('/cart');
+            //setCookie()
         } catch (error) {
-            // console.error(error);
+            setError(error.response.data.message);
+        } finally {
+            setLoading(false);
         }
     }
 
+    if(loading) return <Loader />;
+
     return (
         <section className="w-full h-screen flex flex-col items-center justify-center px-4">
+        
             <div className="max-w-sm w-full">
                 <div className="text-center">
                     <div className="mt-5 space-y-2">
@@ -30,6 +51,11 @@ function Login() {
                         <p className="">Don't have an account? <span onClick={() => { navigate('/signup') }} className="font-medium text-primary cursor-pointer hover:primary-focus">Sign up</span></p>
                     </div>
                 </div>
+                { error && 
+                    <div className="border border-error p-3 mt-2 text-sm rounded"> 
+                        <span>{ error }</span>
+                    </div>
+                }
                 <form className="mt-8 space-y-5" noValidate
                     onSubmit={handleSubmit(login)} >
                     <div>
@@ -44,7 +70,7 @@ function Login() {
                             })}
                             className="w-full mt-2 px-3 py-2 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                         />
-                        <p>{errors.email?.message}</p>
+                        <p className="text-xs text-red-600 pt-1">{errors.email?.message}</p>
                     </div>
                     <div>
                         <label htmlFor="password" className="font-medium">Password</label>
@@ -54,11 +80,11 @@ function Login() {
                             })}
                             className="w-full mt-2 px-3 py-2 bg-transparent outline-none border focus:border-red shadow-sm rounded-lg"
                         />
-                        <p>{errors.password?.message}</p>
+                        <p className="text-xs text-red-600 pt-1">{errors.password?.message}</p>
                     </div>
 
                     <button className="w-full px-4 py-2 text-white font-medium bg-primary-focus hover:bg-primary rounded-lg duration-150">
-                        Sign in
+                        Log in
                     </button>
                     
                     <div className="text-center">

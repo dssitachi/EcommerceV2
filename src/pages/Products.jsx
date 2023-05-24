@@ -2,6 +2,7 @@ import Filter from "../components/Filter"
 import Product from "../components/Product"
 import useSWR from 'swr';
 import fetcher from "../utils/fetcher";
+import Loader from "../components/Loader";
 
 function Products() {
     var a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 21, 22, 23, 24]
@@ -9,7 +10,7 @@ function Products() {
     const { data, error, isLoading } = useSWR(`http://localhost:3000/products`, fetcher);
 
     if (error) return <PageNotFound />;
-    if (isLoading) return null;
+    if (isLoading) return <Loader />;
 
     return (
         <main className="mx-auto mt-16 min-h-screen sm:gap-4 py-16 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -22,10 +23,10 @@ function Products() {
                 <div className="border px-3 py-1">
                     <label htmlFor="sortOptions" className="text-sm mr-2">Sort by:</label>
                     <select id="sortOptions">
-                        <option label="Volvo">Volvo (Latin for "I roll")</option>
-                        <option label="Saab">Saab (Swedish Aeroplane AB)</option>
-                        <option label="Mercedes">Mercedes (Mercedes-Benz)</option>
-                        <option label="Audi">Audi (Auto Union Deutschland Ingolstadt)</option>
+                        <option label="Recommended">Recommended</option>
+                        <option label="Price: Low to High">Price: Low to High</option>
+                        <option label="Price: High to Low">Price: High to Low</option>
+                        
                     </select>
                 </div>
             </div>
