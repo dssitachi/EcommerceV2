@@ -1,13 +1,12 @@
 import Filter from "../components/Filter"
 import Product from "../components/Product"
-import useSWR from 'swr';
-import fetcher from "../utils/fetcher";
 import Loader from "../components/Loader";
+import { useContext } from "react";
+import { ProductsContext } from "../contexts/ProductsContext";
 
 function Products() {
-    var a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 21, 22, 23, 24]
     
-    const { data, error, isLoading } = useSWR(`http://localhost:3000/products`, fetcher);
+    const { products, error, isLoading } = useContext(ProductsContext);
 
     if (error) return <PageNotFound />;
     if (isLoading) return <Loader />;
@@ -25,8 +24,7 @@ function Products() {
                     <select id="sortOptions">
                         <option label="Recommended">Recommended</option>
                         <option label="Price: Low to High">Price: Low to High</option>
-                        <option label="Price: High to Low">Price: High to Low</option>
-                        
+                        <option label="Price: High to Low">Price: High to Low</option>                  
                     </select>
                 </div>
             </div>
@@ -37,7 +35,7 @@ function Products() {
                 {/* Products */}
 
                 <section className="grid grid-cols-1 gap-y-10 gap-x-6 p-4 mx-auto sm:grid-cols-2 sm:flex-[3_0_0%] lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-                    {data.map((x) => {
+                    {products.map((x) => {
                         return <Product key={x.id} product={x}/>
                     })}
                 </section>

@@ -4,9 +4,13 @@ import { DevTool } from "@hookform/devtools";
 import axios from "axios";
 import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import { useState } from "react";
+import Loader from "../components/Loader";
 
 function Signup() {
 
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
     const navigate = useNavigate();
     const form = useForm();
     var { register, control, handleSubmit, formState } = form;
@@ -14,20 +18,22 @@ function Signup() {
 
     async function registerUser(data) {
         try {
+            setLoading(true);
             var response = await axios.post('http://localhost:3000/users/signup', data);
             toast.success("Account Created!", {
                 position: toast.POSITION.TOP_RIGHT
             });
             navigate('/login');
         } catch (error) {
-            toast.error(error.response.data.message, {
-                position: toast.POSITION.TOP_RIGHT
-            });
+            setError(error.response.data.message);
+        } finally {
+            setLoading(false);
         }
     }
 
     return (
         <section className="w-full h-screen flex flex-col items-center justify-center px-4">
+            { loading && <Loader />}
             <div className="max-w-sm w-full">
                 <div className="text-center">
                     <div className="mt-5 space-y-2">
@@ -35,6 +41,11 @@ function Signup() {
                         <p className="">Already have an account? <span onClick={() => navigate('/login')} className="font-medium cursor-pointer text-primary hover:primary-focus">Login</span></p>
                     </div>
                 </div>
+                { error && 
+                    <div className="border border-error p-3 mt-2 text-sm rounded"> 
+                        <span>{ error }</span>
+                    </div>
+                }
                 <form className="mt-8 space-y-5" noValidate
                     onSubmit={handleSubmit(registerUser)} >
                     <div>

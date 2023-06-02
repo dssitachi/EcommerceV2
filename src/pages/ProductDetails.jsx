@@ -1,8 +1,36 @@
+import { useContext, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { ProductsContext } from "../contexts/ProductsContext";
+import { getAxiosClient } from "../utils/fetcher";
+import { UserContext } from "../contexts/UserContext";
+import Loader from "../components/Loader";
 
 function ProductDetails() {
-    
+    const { id } = useParams();
+    const { products } = useContext(ProductsContext);
+    const [ isLoading, setIsLoading ] = useState(false);
+    const { accessToken, setCart, cart } = useContext(UserContext);
+    const navigate = useNavigate();
+    const product = products.find(function currProduct(p) {
+        return id == p.id;
+    })
+
+    async function addToCart() {
+        console.log(accessToken)
+        if(!accessToken) {
+            navigate('/login');
+            return;
+        }
+        setIsLoading(true);
+        var response = await getAxiosClient(accessToken).post('/users/updateCart', [ {item: product, count: 1} ]);
+        setIsLoading(false);
+        console.log([...cart, {item: product, count: 1}])
+        setCart([...cart, {item: product, count: 1}])
+    }
 
     return (
+        <>
+        {isLoading && <Loader />}
         <main className="min-h-screen mt-12 mx-auto py-12 px-4 sm:py-16 sm:px-6 lg:max-w-7xl lg:px-8">
             <div className="mt-6 flex flex-col md:flex-row">
                 <div className="md:w-1/2">
@@ -27,13 +55,16 @@ function ProductDetails() {
                         <li>Feature 3</li>
                     </ul>
                     <div className="mt-4">
-                        <button className="btn btn-primary">
+                        <button className="btn btn-primary"
+                            onClick={addToCart}
+                        >
                             Add to Cart
                         </button>
                     </div>
                 </div>
             </div>
         </main>
+        </>
     )
 }
 

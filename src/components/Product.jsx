@@ -5,9 +5,7 @@ function Product({product}) {
   const navigate = useNavigate();
   
   function routeToProductDetail(id) {
-    navigate(`/product/${id}`, {
-      state: product
-    });
+    navigate(`/product/${id}`);
   }
 
   return (

@@ -5,18 +5,20 @@ export const UserContext = createContext();
 
 function UserProvider({ children }) {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [cart, setCart] = useState([{id: 1, count: 1}, {id: 2, count: 2}]);
+    const [cart, setCart] = useState([]);
     const [accessToken, setAccessToken] = useState("");
 
     useEffect(function () {
         var token = getCookie('accessToken');
         if(token) {
             setIsLoggedIn(true);
+            setAccessToken(token);
         }
     }, [accessToken]);
 
     function logOut() {
         setIsLoggedIn(false);
+        setAccessToken("");
         setCart([]);
         deleteCookie('accessToken');
     }

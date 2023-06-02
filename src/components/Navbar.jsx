@@ -1,25 +1,41 @@
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineShopping, AiOutlineHeart, AiOutlineUser } from 'react-icons/ai';
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../contexts/UserContext";
 
 function Navbar() {
 
-    const { isLoggedIn } = useContext(UserContext);
+    const [isHovered, setIsHovered] = useState(false);
+    const { isLoggedIn, logOut } = useContext(UserContext);
     const navigate = useNavigate();
-    
+
     function navigateToCart() {
-        if(isLoggedIn) {
+        if (isLoggedIn) {
             navigate('/cart');
         } else {
             navigate('/login');
         }
     }
 
+    function handleLogOut() {
+        navigate('/');
+        logOut();
+    }
+
+    const handleMouseEnter = () => {
+        setIsHovered(true);
+    };
+
+    const handleMouseLeave = () => {
+        setIsHovered(false);
+    };
+
+
     return (
         <nav className="fixed top-0 z-50 w-full bg-base-200 shadow-lg">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between h-16">
+
                     <div className="flex-shrink-0 flex items-center">
                         <Link to="/">
                             <h3 className="text-2xl text-primary-content font-bold tracking-wide h-8 w-auto"> WorkSpace Essentials </h3>
@@ -28,8 +44,28 @@ function Navbar() {
 
                     <div className="flex items-center">
 
-                        <div className="cursor-pointer mx-2">
+                        <div className="cursor-pointer mx-2 relative"
+                            onMouseEnter={handleMouseEnter}
+                            onMouseLeave={handleMouseLeave}
+                        >
                             <AiOutlineUser className="h-6 w-6" />
+
+                            <div className={`${isHovered ? 'block' : 'hidden'} absolute w-60 h-60 bg-secondary-content right-0 `}>
+                                <div className="p-4 flex flex-col">
+                                    <span> {isLoggedIn ? 'Welcomer User' : ''} </span>
+
+                                    {isLoggedIn && <button className="btn btn-secondary p-2" onClick={handleLogOut}>
+                                        Log Out
+                                    </button>
+                                    }
+                                    {
+                                        !isLoggedIn && <button className="btn btn-secondary" onClick={() => { navigate('/login') }}>
+                                            Login
+                                        </button>
+                                    }
+                                </div>
+                            </div>
+
                         </div>
 
                         <div className="cursor-pointer mx-2">

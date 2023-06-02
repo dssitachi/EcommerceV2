@@ -2,7 +2,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 
 function Loader() {
     return (
-        <div className="w-screen h-screen bg-transparent flex justify-center items-center">
+        <div className="fixed w-screen h-screen top-0 left-0 bg-black bg-opacity-20 flex justify-center items-center z-[999]">
               <ClipLoader />
         </div>
     )

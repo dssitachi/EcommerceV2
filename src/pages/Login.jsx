@@ -3,7 +3,6 @@ import { setCookie } from '../hooks/useCookie';
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 import axios from "axios";
-import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { useContext, useState } from "react";
 import  Loader from '../components/Loader';
@@ -15,7 +14,7 @@ function Login() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const navigate = useNavigate();
-    const { setAccessToken } = useContext(UserContext);
+    const { setAccessToken, setIsLoggedIn } = useContext(UserContext);
 
     const form = useForm();
     var { register, control, handleSubmit, formState } = form;
@@ -25,13 +24,11 @@ function Login() {
         try {
             setLoading(true);
             var response = await axios.post('http://localhost:3000/users/login', data);
-            toast.success("Logged In successfully!", {
-                position: toast.POSITION.TOP_RIGHT
-            });
-            setAccessToken(response.data.access_token)
+            setAccessToken(response.data.access_token);
             // var s = await axios.post('http://localhost:3000/products/add', d);
-            navigate('/cart');
-            //setCookie()
+            setIsLoggedIn(true);
+            setCookie('accessToken', response.data.access_token);
+            navigate('/products');
         } catch (error) {
             setError(error.response.data.message);
         } finally {
@@ -39,11 +36,9 @@ function Login() {
         }
     }
 
-    if(loading) return <Loader />;
-
     return (
         <section className="w-full h-screen flex flex-col items-center justify-center px-4">
-        
+            { loading && <Loader />}
             <div className="max-w-sm w-full">
                 <div className="text-center">
                     <div className="mt-5 space-y-2">
@@ -70,7 +65,7 @@ function Login() {
                             })}
                             className="w-full mt-2 px-3 py-2 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                         />
-                        <p className="text-xs text-red-600 pt-1">{errors.email?.message}</p>
+                        <span className="text-xs text-red-600 pt-1">{errors.email?.message}</span>
                     </div>
                     <div>
                         <label htmlFor="password" className="font-medium">Password</label>

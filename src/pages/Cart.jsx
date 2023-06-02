@@ -5,7 +5,6 @@ import { getAxiosClient } from "../utils/fetcher";
 function Cart() {
 
     const { cart, setCart, accessToken } = useContext(UserContext);
-
     /**
      * This function handles operation on cart
      */
@@ -23,29 +22,31 @@ function Cart() {
 
             { cart.map(function displayCart(item) {
                 return (
-                    <div>
-                        <div>
+                    <div className="max-w-xl" key={item.item.id}>
+                        <div className="flex justify-between">
                             {/* Image & price */}
                             <div>
-                                <div>
-                                    <img src={item.img}/>
+                                <div className="flex">
+                                    <img className="h-20" src={item.item.img}/>
                                     <div className="flex flex-col">
-                                        <span> {item.name} </span>
+                                        <span> {item.item.name} </span>
+                                        <label> Quantity: 
                                         <select defaultValue={item.count}>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                         </select>
+                                        </label>
                                     </div>
                                 </div>
-                                <div className="flex flex-col justify-between">
-                                    <span>${item.price}</span>
+                                
+                            </div>
+                            
+                            <div className="flex flex-col justify-between">
+                                    <span>${item.item.price}</span>
                                     <button> Remove </button>
                                 </div>
-                            </div>
-                            <div>
-
-                            </div>
+                            
                         </div>
                     </div>
                 )
