@@ -17,8 +17,8 @@ function Cart() {
     }
     
     return (
-        <>
-            <div className="my-9">Cart is here</div>
+        
+            <section className="min-h-screen mt-12 mx-auto py-12 px-4 sm:py-16 sm:px-6 lg:max-w-7xl lg:px-8">
 
             { cart.map(function displayCart(item) {
                 return (
@@ -27,7 +27,9 @@ function Cart() {
                             {/* Image & price */}
                             <div>
                                 <div className="flex">
+                                    <div>
                                     <img className="h-20" src={item.item.img}/>
+                                    </div>
                                     <div className="flex flex-col">
                                         <span> {item.item.name} </span>
                                         <label> Quantity: 
@@ -52,7 +54,7 @@ function Cart() {
                 )
             })}
 
-        </>
+        </section>
     )
 }
 

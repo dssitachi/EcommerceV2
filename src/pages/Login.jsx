@@ -63,7 +63,7 @@ function Login() {
                                     message: 'Invalid email address',
                                 },
                             })}
-                            className="w-full mt-2 px-3 py-2 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                            className="w-full mt-2 px-3 py-2 bg-transparent outline-none border focus:border-primary-focus shadow-sm rounded-lg"
                         />
                         <span className="text-xs text-red-600 pt-1">{errors.email?.message}</span>
                     </div>
@@ -73,9 +73,9 @@ function Login() {
                             {...register('password', {
                                 required: 'Password is required'
                             })}
-                            className="w-full mt-2 px-3 py-2 bg-transparent outline-none border focus:border-red shadow-sm rounded-lg"
+                            className="w-full mt-2 px-3 py-2 bg-transparent outline-none border focus:border-primary-focus shadow-sm rounded-lg"
                         />
-                        <p className="text-xs text-red-600 pt-1">{errors.password?.message}</p>
+                        <span className="text-xs text-red-600 pt-1">{errors.password?.message}</span>
                     </div>
 
                     <button className="w-full px-4 py-2 text-white font-medium bg-primary-focus hover:bg-primary rounded-lg duration-150">

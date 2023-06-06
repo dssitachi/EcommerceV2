@@ -8,7 +8,7 @@ import Loader from "../components/Loader";
 function ProductDetails() {
     const { id } = useParams();
     const { products } = useContext(ProductsContext);
-    const [ isLoading, setIsLoading ] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const { accessToken, setCart, cart } = useContext(UserContext);
     const navigate = useNavigate();
     const product = products.find(function currProduct(p) {
@@ -17,53 +17,65 @@ function ProductDetails() {
 
     async function addToCart() {
         console.log(accessToken)
-        if(!accessToken) {
+        if (!accessToken) {
             navigate('/login');
             return;
         }
         setIsLoading(true);
-        var response = await getAxiosClient(accessToken).post('/users/updateCart', [ {item: product, count: 1} ]);
+        var response = await getAxiosClient(accessToken).post('/users/updateCart', [{ item: product, count: 1 }]);
         setIsLoading(false);
-        console.log([...cart, {item: product, count: 1}])
-        setCart([...cart, {item: product, count: 1}])
+        console.log([...cart, { item: product, count: 1 }])
+        setCart([...cart, { item: product, count: 1 }])
     }
 
     return (
         <>
-        {isLoading && <Loader />}
-        <main className="min-h-screen mt-12 mx-auto py-12 px-4 sm:py-16 sm:px-6 lg:max-w-7xl lg:px-8">
-            <div className="mt-6 flex flex-col md:flex-row">
-                <div className="md:w-1/2">
-                    <img
-                        className="object-contain h-64 w-full"
-                        src="https://via.placeholder.com/500x500.png"
-                        alt="Product Image"
-                    />
-                </div>
-                <div className="md:w-1/2 md:pl-6 mt-4 md:mt-0">
-                    <h2 className="text-lg font-bold">Product Details</h2>
-                    <p className="text-gray-500">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                        suscipit, nunc ac aliquam suscipit, nulla turpis molestie enim,
-                        quis imperdiet felis ipsum vel arcu. Ut efficitur ex sed
-                        consectetur mattis. Sed eu felis a nibh ullamcorper iaculis.
-                    </p>
-                    <h2 className="text-lg font-bold mt-4">Product Features</h2>
-                    <ul className="list-disc list-inside text-gray-500">
-                        <li>Feature 1</li>
-                        <li>Feature 2</li>
-                        <li>Feature 3</li>
-                    </ul>
-                    <div className="mt-4">
-                        <button className="btn btn-primary"
+            {isLoading && <Loader />}
+            <div className="min-h-screen mx-auto py-12 px-4 flex justify-center items-center sm:py-16 sm:px-6 lg:max-w-7xl lg:px-8">
+                <main className="grid grid-rows-1 sm:grid-cols-2 sm:gap-10">
+                    <section className="p-7 flex items-center justify-center rounded-lg bg-black/[0.075] ">
+                        <img
+                            src={product?.img}
+                            alt=""
+                            className="w-full object-contain max-w-xs"
+                        />
+                    </section>
+                    <section className="p-7 flex flex-col gap-4">
+
+                        <div className="flex flex-col gap-2">
+                            <h1 className="text-2xl font-bold"> {product?.name} </h1>
+                            <p className="text-gray-600 text-sm">
+                                {product?.description}
+                            </p>
+                        </div>
+
+                        <div className="flex flex-col gap-2">
+                            <h3 className="text-lg font-semibold"> About Product</h3>
+                            <div className="flex gap-2 items-center">
+                                <span className="text-gray-500 text-sm">Brand:</span>
+                                {product?.brand}
+                            </div>
+                            <div className="flex gap-2 items-center">
+                                <span className="text-gray-500 text-sm">Category:</span>
+                                <span>{product?.category}</span>
+                            </div>
+                        </div>
+
+                        <div className="flex gap-2 items-center pb-10 sm:pb-0">
+                           <span className="text-lg font-semibold"> Price: </span> 
+                            <span className="ms-1 text-xl sm:text-2xl font-semibold">
+                                ₹ {product?.price}
+                            </span>
+                        </div>
+
+                        <div>
+                            <button className="px-4 py-2 bg-primary rounded-md text-white"
                             onClick={addToCart}
-                        >
-                            Add to Cart
-                        </button>
-                    </div>
-                </div>
+                            >Add to Cart</button>
+                        </div>
+                    </section>
+                </main>
             </div>
-        </main>
         </>
     )
 }
