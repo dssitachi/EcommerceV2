@@ -7,7 +7,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Footer from './components/Footer';
 import Cart from './pages/Cart';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, Slide } from 'react-toastify';
 
 function App() {
 
@@ -25,9 +25,19 @@ function App() {
                     {/* <Route path='/checkout/success' element={<CheckoutSuccess />} /> */}
                 </Routes>
                 {/* <Sidebar /> */}
-                
+
             </Router>
-            <ToastContainer />
+            <ToastContainer
+                position="bottom-center"
+                autoClose={3000}
+                hideProgressBar
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                pauseOnHover={false}
+                transition={Slide}
+            />
         </>
     )
 }

@@ -35,3 +35,6 @@ export var d = [
 
 
 // var s = await axios.post('http://localhost:3000/products/add', d);
+
+export const brands = ['Boat', 'Seinheisser', 'Bose', 'Sony']
+export const categories = ['Headphones', 'Speakers', 'Earbuds']

@@ -4,17 +4,17 @@ import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import  Loader from '../components/Loader';
-import { UserContext } from "../contexts/UserContext";
 import { d } from '../utils/products';
+import { useUserContext } from "../contexts";
 
 function Login() {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const navigate = useNavigate();
-    const { setAccessToken, setIsLoggedIn } = useContext(UserContext);
+    const { setAccessToken, setIsLoggedIn } = useUserContext();
 
     const form = useForm();
     var { register, control, handleSubmit, formState } = form;
@@ -25,7 +25,7 @@ function Login() {
             setLoading(true);
             var response = await axios.post('http://localhost:3000/users/login', data);
             setAccessToken(response.data.access_token);
-            // var s = await axios.post('http://localhost:3000/products/add', d);
+            var s = await axios.post('http://localhost:3000/products/add', d);
             setIsLoggedIn(true);
             setCookie('accessToken', response.data.access_token);
             navigate('/products');

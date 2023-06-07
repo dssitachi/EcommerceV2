@@ -1,15 +1,15 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ProductsContext } from "../contexts/ProductsContext";
 import { getAxiosClient } from "../utils/fetcher";
-import { UserContext } from "../contexts/UserContext";
 import Loader from "../components/Loader";
+import { toast } from "react-toastify";
+import { useProductsContext, useUserContext } from "../contexts";
 
 function ProductDetails() {
     const { id } = useParams();
-    const { products } = useContext(ProductsContext);
+    const { products } = useProductsContext();
     const [isLoading, setIsLoading] = useState(false);
-    const { accessToken, setCart, cart } = useContext(UserContext);
+    const { accessToken, setCart, cart } = useUserContext();
     const navigate = useNavigate();
     const product = products.find(function currProduct(p) {
         return id == p.id;
@@ -21,11 +21,23 @@ function ProductDetails() {
             navigate('/login');
             return;
         }
-        setIsLoading(true);
-        var response = await getAxiosClient(accessToken).post('/users/updateCart', [{ item: product, count: 1 }]);
-        setIsLoading(false);
-        console.log([...cart, { item: product, count: 1 }])
-        setCart([...cart, { item: product, count: 1 }])
+        
+        try {
+            setIsLoading(true);
+            var response = await getAxiosClient(accessToken).post('/users/updateCart', [{ item: product, count: 1 }]);
+            console.log([...cart, { item: product, count: 1 }])
+            setCart([...cart, { item: product, count: 1 }])
+            toast.success("Product added to Cart", {
+                position: toast.POSITION.BOTTOM_CENTER
+            });
+        } catch(error) {
+            toast.error("Error occured while adding product", {
+                position: toast.POSITION.BOTTOM_CENTER
+            });
+        }
+        finally {
+            setIsLoading(false);
+        }
     }
 
     return (

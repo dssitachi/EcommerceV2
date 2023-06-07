@@ -1,12 +1,11 @@
 import Filter from "../components/Filter"
 import Product from "../components/Product"
 import Loader from "../components/Loader";
-import { useContext } from "react";
-import { ProductsContext } from "../contexts/ProductsContext";
+import { useProductsContext } from "../contexts";
 
 function Products() {
     
-    const { products, error, isLoading } = useContext(ProductsContext);
+    const { filteredProducts: products, error, isLoading } = useProductsContext();
 
     if (error) return <PageNotFound />;
     if (isLoading) return <Loader />;

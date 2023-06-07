@@ -1,12 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineShopping, AiOutlineHeart, AiOutlineUser } from 'react-icons/ai';
-import { useContext, useState } from "react";
-import { UserContext } from "../contexts/UserContext";
+import { useState } from "react";
+import { useUserContext } from "../contexts";
 
 function Navbar() {
 
     const [isHovered, setIsHovered] = useState(false);
-    const { isLoggedIn, logOut } = useContext(UserContext);
+    const { isLoggedIn, logOut } = useUserContext();
     const navigate = useNavigate();
 
     function navigateToCart() {
@@ -38,7 +38,7 @@ function Navbar() {
 
                     <div className="flex-shrink-0 flex items-center">
                         <Link to="/">
-                            <h3 className="text-2xl text-primary-content font-bold tracking-wide h-8 w-auto"> WorkSpace Essentials </h3>
+                            <h3 className="text-2xl text-primary-content font-bold tracking-wide h-8 w-auto"> TechTrendz </h3>
                         </Link>
                     </div>
 

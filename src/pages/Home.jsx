@@ -4,7 +4,7 @@ import earbuds from '../assets/images/earbuds.jpg';
 import smwatch from '../assets/images/smartwatch.png';
 import phone from '../assets/images/phone-05.jpg';
 import { useNavigate } from 'react-router-dom';
-
+import Categories from '../components/Categories';
 function Home() {
     const navigate = useNavigate();
 
@@ -45,6 +45,7 @@ function Home() {
                     </div>
                 </div>
             </div>
+            <Categories />
         </main>
     )
 }

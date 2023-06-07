@@ -21,7 +21,7 @@ function Signup() {
             setLoading(true);
             var response = await axios.post('http://localhost:3000/users/signup', data);
             toast.success("Account Created!", {
-                position: toast.POSITION.TOP_RIGHT
+                position: toast.POSITION.BOTTOM_CENTER
             });
             navigate('/login');
         } catch (error) {
