@@ -9,7 +9,7 @@ function Product({product}) {
   }
 
   return (
-    <div className="border border-base-200">
+    <div className="border border-base-200 transition-transform hover:scale-[1.02] shadow-lg rounded-lg">
       
       <div className="max-w-sm mx-auto mb-2 cursor-pointer" onClick={() => { routeToProductDetail(product.id) }}>
         <img src={product.img} alt="aa" className="block" />

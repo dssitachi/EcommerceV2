@@ -24,7 +24,7 @@ function ProductDetails() {
         
         try {
             setIsLoading(true);
-            var response = await getAxiosClient(accessToken).post('/users/updateCart', [{ item: product, count: 1 }]);
+            let response = await getAxiosClient(accessToken).post('/users/addToCart', { item: product, count: 1 });
             console.log([...cart, { item: product, count: 1 }])
             setCart([...cart, { item: product, count: 1 }])
             toast.success("Product added to Cart", {
@@ -81,7 +81,7 @@ function ProductDetails() {
                         </div>
 
                         <div>
-                            <button className="px-4 py-2 bg-primary rounded-md text-white"
+                            <button className="px-4 py-2 bg-primary rounded-md text-white transition-transform hover:scale-[1.1]"
                             onClick={addToCart}
                             >Add to Cart</button>
                         </div>

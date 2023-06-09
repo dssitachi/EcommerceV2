@@ -1,56 +1,54 @@
-import { getAxiosClient } from "../utils/fetcher";
 import { useUserContext } from "../contexts";
+import { useNavigate } from "react-router-dom";
+import emptyCartImg from '../assets/images/emptyCart.png';
+import CartItemCard from "../components/CartItemCard";
+import CartTotal from "../components/CartTotal";
 
 function Cart() {
 
-    const { cart, setCart, accessToken } = useUserContext();
+    const navigate = useNavigate();
+    const { cart } = useUserContext();
     /**
      * This function handles operation on cart
      */
-    async function updateCart(id, qty) {
-        var updatedCart = cart.map((x) => {
-            if (x.id == id) return { ...x, count: qty };
-            return x;
-        })
-        var response = await getAxiosClient(accessToken).post('/users/updateCart', []);
-    }
+
 
     return (
-
         <section className="min-h-screen mt-12 mx-auto py-12 px-4 sm:py-16 sm:px-6 lg:max-w-7xl lg:px-8">
 
-            {cart.map(function displayCart(item) {
-                return (
-                    <div className="max-w-xl" key={item.item.id}>
-                        <div className="flex justify-between">
-                            {/* Image & price */}
-                            <div>
-                                <div className="flex">
-                                    <div>
-                                        <img className="h-20" src={item.item.img} />
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <span> {item.item.name} </span>
-                                        <label> Quantity:
-                                            <select defaultValue={item.count}>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                            </select>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="flex flex-col justify-between">
-                                <span>${item.item.price}</span>
-                                <button> Remove </button>
-                            </div>
-
-                        </div>
+            <div className="py-2 ">
+                {cart.length > 0 && (
+                    <h1 className="text-2xl font-bold p-3 ">Cart({cart.length})</h1>
+                )}
+                {cart.length ? (
+                    <div className="grid md:grid-cols-3 gap-5">
+                        <section className="md:col-span-2 flex flex-col gap-4">
+                            {cart.map((product) => (
+                                <CartItemCard product={product} key={product.item.id} />
+                            ))}
+                        </section>
+                        <CartTotal cart={cart} />
                     </div>
-                )
-            })}
+                ) : (
+                    <div className="h-[60vh] w-full flex flex-col items-center justify-center  gap-3 ">
+                        <img
+                            src={emptyCartImg}
+                            alt="empty Cart"
+                            className="h-60 mt-5"
+                        />
+                        <div className="text-center">
+                            <h2 className="text-2xl font-bold">Hey, it feels so light!</h2>
+                            <p className="text-sm text-gray-400">
+                                There's nothing in your bag. Let's add some items.
+                            </p>
+                        </div>
+
+                        <button className="px-4 py-2 bg-primary rounded-md text-white transition-transform hover:scale-[1.1]"
+                            onClick={() => navigate("/products")}
+                            >Explore</button>
+                    </div>
+                )}
+            </div>
 
         </section>
     )

@@ -6,20 +6,22 @@ function Filter() {
 
     const [isOpen, setIsOpen] = useState(false);
     const [brandFilters, setBrandFilters] = useState([]);
+    const [sortBy, setSortBy] = useState('relevance');
     const [categoryFilters, setCategoryFilters] = useState([]);
     const { filterProducts } = useContext(ProductsContext);
 
-    function handleFilter(checked, item, cb) {
+
+    function handleFilter(checked, item, filters, cb) {
         if (checked) {
-            cb([...brandFilters, item])
+            cb([...filters, item])
         } else {
-            cb(brandFilters.filter(x => x != item));
+            cb(filters.filter(x => x != item));
         }
     }
 
     useEffect(() => {
-        filterProducts(brandFilters, categoryFilters);
-    }, [brandFilters, categoryFilters]);
+        filterProducts(brandFilters, categoryFilters, sortBy);
+    }, [brandFilters, categoryFilters, sortBy]);
 
     function clearFilter() {
         setIsOpen(false);
@@ -43,7 +45,7 @@ function Filter() {
                                         <li key={category}>
                                             <label className="inline-flex items-center">
                                                 <input type="checkbox" className="cursor-pointer" checked={categoryFilters.includes(category)}
-                                                    onChange={function filter(e) { handleFilter(e.target.checked, category, setCategoryFilters) }} />
+                                                    onChange={function filter(e) { handleFilter(e.target.checked, category, categoryFilters, setCategoryFilters) }} />
                                                 <span className="ml-2 text-sm">{category}</span>
                                             </label>
                                         </li>
@@ -63,7 +65,7 @@ function Filter() {
                                         <li key={brand}>
                                             <label className="inline-flex items-center">
                                                 <input type="checkbox" className="cursor-pointer" checked={brandFilters.includes(brand)}
-                                                    onChange={function filter(e) { handleFilter(e.target.checked, brand, setBrandFilters) }} />
+                                                    onChange={function filter(e) { handleFilter(e.target.checked, brand, brandFilters, setBrandFilters) }} />
                                                 <span className="ml-2 text-sm">{brand}</span>
                                             </label>
                                         </li>

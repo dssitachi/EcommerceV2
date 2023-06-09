@@ -25,7 +25,7 @@ function Login() {
             setLoading(true);
             var response = await axios.post('http://localhost:3000/users/login', data);
             setAccessToken(response.data.access_token);
-            var s = await axios.post('http://localhost:3000/products/add', d);
+            // var s = await axios.post('http://localhost:3000/products/add', d);
             setIsLoggedIn(true);
             setCookie('accessToken', response.data.access_token);
             navigate('/products');

@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { deleteCookie, getCookie } from "../hooks/useCookie";
-
+import { getAxiosClient } from '../utils/fetcher';
 export const UserContext = createContext();
 
 function UserProvider({ children }) {
@@ -13,6 +13,16 @@ function UserProvider({ children }) {
         if(token) {
             setIsLoggedIn(true);
             setAccessToken(token);
+            (async function getUserCart() {
+                try {
+                    const response = await getAxiosClient(token).get('/users/cart');
+                    setCart(response.data);
+                } catch(error) {
+
+                } finally {
+
+                }
+            })();
         }
     }, [accessToken]);
 

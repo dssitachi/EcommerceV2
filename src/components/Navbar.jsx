@@ -38,7 +38,7 @@ function Navbar() {
 
                     <div className="flex-shrink-0 flex items-center">
                         <Link to="/">
-                            <h3 className="text-2xl text-primary-content font-bold tracking-wide h-8 w-auto"> TechTrendz </h3>
+                            <h3 className="text-2xl text-primary-content font-bold tracking-wide h-8 w-auto"> EarCandy Central </h3>
                         </Link>
                     </div>
 
