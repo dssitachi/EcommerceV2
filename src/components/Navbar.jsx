@@ -1,11 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineShopping, AiOutlineHeart, AiOutlineUser } from 'react-icons/ai';
-import { useState } from "react";
 import { useUserContext } from "../contexts";
 
 function Navbar() {
-
-    const [isHovered, setIsHovered] = useState(false);
     const { isLoggedIn, logOut } = useUserContext();
     const navigate = useNavigate();
 
@@ -17,19 +14,13 @@ function Navbar() {
         }
     }
 
-    function handleLogOut() {
-        navigate('/');
-        logOut();
+    function navigateToProfile() {
+        if (isLoggedIn) {
+            navigate('/profile');
+        } else {
+            navigate('/login');
+        }
     }
-
-    const handleMouseEnter = () => {
-        setIsHovered(true);
-    };
-
-    const handleMouseLeave = () => {
-        setIsHovered(false);
-    };
-
 
     return (
         <nav className="fixed top-0 z-50 w-full bg-base-200 shadow-lg">
@@ -44,28 +35,8 @@ function Navbar() {
 
                     <div className="flex items-center">
 
-                        <div className="cursor-pointer mx-2 relative"
-                            onMouseEnter={handleMouseEnter}
-                            onMouseLeave={handleMouseLeave}
-                        >
+                        <div className="cursor-pointer mx-2" onClick={navigateToProfile}>
                             <AiOutlineUser className="h-6 w-6" />
-
-                            <div className={`${isHovered ? 'block' : 'hidden'} absolute w-60 h-60 bg-secondary-content right-0 `}>
-                                <div className="p-4 flex flex-col">
-                                    <span> {isLoggedIn ? 'Welcomer User' : ''} </span>
-
-                                    {isLoggedIn && <button className="btn btn-secondary p-2" onClick={handleLogOut}>
-                                        Log Out
-                                    </button>
-                                    }
-                                    {
-                                        !isLoggedIn && <button className="btn btn-secondary" onClick={() => { navigate('/login') }}>
-                                            Login
-                                        </button>
-                                    }
-                                </div>
-                            </div>
-
                         </div>
 
                         <div className="cursor-pointer mx-2">

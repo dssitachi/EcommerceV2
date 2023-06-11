@@ -5,9 +5,10 @@ import Products from './pages/Products';
 import ProductDetails from './pages/ProductDetails';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import Footer from './components/Footer';
 import Cart from './pages/Cart';
+import Profile from './components/Profile';
 import { ToastContainer, Slide } from 'react-toastify';
+
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/cart" element={<Cart />} />
+                    <Route path="/profile" element={<Profile />} />
                     {/* <Route path='/checkout/success' element={<CheckoutSuccess />} /> */}
                 </Routes>
                 {/* <Sidebar /> */}
