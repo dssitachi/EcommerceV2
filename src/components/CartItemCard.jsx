@@ -1,8 +1,8 @@
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { useUserContext } from '../contexts';
 import { useState } from 'react';
-import { toast } from 'react-toastify';
 import { getAxiosClient } from '../utils/fetcher';
+import { displayToast } from '../utils/toast';
 
 function CartItemCard({ product }) {
 
@@ -29,9 +29,7 @@ function CartItemCard({ product }) {
     	let response = await getAxiosClient(accessToken).post('/users/updateCart', updatedCart);
 		setCart(updatedCart);
 	} catch(error) {
-		toast.error("Error occured while adding to Cart", {
-			position: toast.POSITION.BOTTOM_CENTER
-		});
+    displayToast("error", "Error occured while adding to Cart");
 	} finally {
 		setDisable(false);
 	}

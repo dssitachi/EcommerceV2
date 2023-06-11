@@ -4,6 +4,7 @@ import { getAxiosClient } from "../utils/fetcher";
 import Loader from "../components/Loader";
 import { toast } from "react-toastify";
 import { useProductsContext, useUserContext } from "../contexts";
+import { displayToast } from "../utils/toast";
 
 function ProductDetails() {
     const { id } = useParams();
@@ -27,13 +28,9 @@ function ProductDetails() {
             let response = await getAxiosClient(accessToken).post('/users/addToCart', { item: product, count: 1 });
             console.log([...cart, { item: product, count: 1 }])
             setCart([...cart, { item: product, count: 1 }])
-            toast.success("Product added to Cart", {
-                position: toast.POSITION.BOTTOM_CENTER
-            });
+            displayToast("success", "Product added to Cart")
         } catch(error) {
-            toast.error("Error occured while adding product", {
-                position: toast.POSITION.BOTTOM_CENTER
-            });
+            displayToast("error", "Error occured while adding product")
         }
         finally {
             setIsLoading(false);
