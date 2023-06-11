@@ -13,7 +13,7 @@ function CartTotal({ cart }) {
 				{
 					cart.map(function displayItemTotal(cartItem) {
 						return (
-							<div className="flex justify-between mt-1">
+							<div className="flex justify-between mt-1" key={cartItem.item.id}>
 								<span className="text-md">{cartItem.item.name} {`( ${cartItem.count} )`}</span>
 								<span className="font-semibold">$ {cartItem.count * cartItem.item.price} </span>
 							</div>

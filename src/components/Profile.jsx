@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { useUserContext } from '../contexts';
+import { useAuthContext } from '../contexts';
 import { useNavigate } from 'react-router-dom';
 
 function Profile() {
     const [loggingOut, setLoggingOut] = useState(false);
     const navigate = useNavigate();
-    const { logOut } = useUserContext();
+    const { logOut } = useAuthContext();
 
     function handleLogOut() {
         setLoggingOut(true);

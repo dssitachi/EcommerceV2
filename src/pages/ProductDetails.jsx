@@ -2,15 +2,15 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getAxiosClient } from "../utils/fetcher";
 import Loader from "../components/Loader";
-import { toast } from "react-toastify";
-import { useProductsContext, useUserContext } from "../contexts";
+import { useAuthContext, useCartContext, useProductsContext } from "../contexts";
 import { displayToast } from "../utils/toast";
 
 function ProductDetails() {
     const { id } = useParams();
     const { products } = useProductsContext();
     const [isLoading, setIsLoading] = useState(false);
-    const { accessToken, setCart, cart } = useUserContext();
+    const { accessToken } = useAuthContext();
+    const { setCart, cart } = useCartContext();
     const navigate = useNavigate();
     const product = products.find(function currProduct(p) {
         return id == p.id;

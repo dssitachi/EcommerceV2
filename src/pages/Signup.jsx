@@ -1,39 +1,41 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 import axios from "axios";
-import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Loader from "../components/Loader";
-
+import { displayToast } from "../utils/toast";
+import { useAuthContext } from "../contexts";
 function Signup() {
 
-    const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const { isLoggedIn, loading, signUp } = useAuthContext();
     const navigate = useNavigate();
+    const location = useLocation();
     const form = useForm();
     var { register, control, handleSubmit, formState } = form;
     var { errors } = formState;
 
-    async function registerUser(data) {
-        try {
-            setLoading(true);
-            var response = await axios.post('http://localhost:3000/users/signup', data);
-            toast.success("Account Created!", {
-                position: toast.POSITION.BOTTOM_CENTER
-            });
-            navigate('/login');
-        } catch (error) {
-            setError(error.response.data.message);
-        } finally {
-            setLoading(false);
-        }
+    function registerUser(data) {
+        signUp(data, setError);
     }
+
+    useEffect(function redirectIfLoggedIn() {
+        var id;
+        if (isLoggedIn) {
+            id = setTimeout(() => {
+                navigate(location?.state?.from?.pathname ?? "/");
+            }, 1000);
+        }
+        return () => {
+            clearInterval(id);
+        };
+    }, [isLoggedIn])
 
     return (
         <section className="w-full h-screen flex flex-col items-center justify-center px-4">
-            { loading && <Loader />}
+            {loading && <Loader />}
             <div className="max-w-sm w-full">
                 <div className="text-center">
                     <div className="mt-5 space-y-2">
@@ -41,9 +43,9 @@ function Signup() {
                         <p className="">Already have an account? <span onClick={() => navigate('/login')} className="font-medium cursor-pointer text-primary hover:primary-focus">Login</span></p>
                     </div>
                 </div>
-                { error && 
-                    <div className="border border-error p-3 mt-2 text-sm rounded"> 
-                        <span>{ error }</span>
+                {error &&
+                    <div className="border border-error p-3 mt-2 text-sm rounded">
+                        <span>{error}</span>
                     </div>
                 }
                 <form className="mt-8 space-y-5" noValidate
@@ -79,7 +81,7 @@ function Signup() {
                 </form>
                 <DevTool control={control} />
             </div>
-            
+
         </section>
     )
 }

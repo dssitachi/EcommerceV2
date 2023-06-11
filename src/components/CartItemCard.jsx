@@ -1,12 +1,13 @@
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
-import { useUserContext } from '../contexts';
+import { useAuthContext, useCartContext } from '../contexts';
 import { useState } from 'react';
 import { getAxiosClient } from '../utils/fetcher';
 import { displayToast } from '../utils/toast';
 
 function CartItemCard({ product }) {
 
-  const { accessToken, setCart, cart } = useUserContext();
+  const { accessToken } = useAuthContext();
+  const {  setCart, cart } = useCartContext();
   const [ disable, setDisable ] = useState(false);
 
   async function updateCart(addFlag) {

@@ -1,40 +1,29 @@
 import { useNavigate } from "react-router-dom";
-import { setCookie } from '../hooks/useCookie';
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
-import axios from "axios";
-import "react-toastify/dist/ReactToastify.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import  Loader from '../components/Loader';
-import { d } from '../utils/products';
-import { useUserContext } from "../contexts";
+import { useAuthContext } from "../contexts";
 
 function Login() {
 
-    const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const { isLoggedIn, loading, login } = useAuthContext();
     const navigate = useNavigate();
-    const { setAccessToken, setIsLoggedIn } = useUserContext();
 
     const form = useForm();
     var { register, control, handleSubmit, formState } = form;
     var { errors } = formState;
 
-    async function login(data) {
-        try {
-            setLoading(true);
-            var response = await axios.post('http://localhost:3000/users/login', data);
-            setAccessToken(response.data.access_token);
-            // var s = await axios.post('http://localhost:3000/products/add', d);
-            setIsLoggedIn(true);
-            setCookie('accessToken', response.data.access_token);
-            navigate('/products');
-        } catch (error) {
-            setError(error.response.data.message);
-        } finally {
-            setLoading(false);
-        }
+    function loginHandler(data) {
+        login(data, setError);
     }
+
+    useEffect(function redirectIfLoggedIn() {
+        if(isLoggedIn) {
+            navigate('/products');
+        }
+    }, [isLoggedIn])
 
     return (
         <section className="w-full h-screen flex flex-col items-center justify-center px-4">
@@ -52,7 +41,7 @@ function Login() {
                     </div>
                 }
                 <form className="mt-8 space-y-5" noValidate
-                    onSubmit={handleSubmit(login)} >
+                    onSubmit={handleSubmit(loginHandler)} >
                     <div>
                         <label htmlFor="email" className="font-medium">Email</label>
                         <input id="email" type="text"

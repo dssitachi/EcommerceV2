@@ -1,9 +1,12 @@
 import { useContext } from "react";
 import { ProductsContext } from "./ProductsContext";
-import { UserContext } from "./UserContext";
+import { AuthContext } from "./AuthContext";
+import { CartContext } from "./CartContext";
 
-export { default as UserContextProvider } from './UserContext';
 export { default as ProductsContextProvider } from './ProductsContext';
+export { default as CartContextProvider } from './CartContext';
+export { default as AuthContextProvider } from './AuthContext';
 
-export const useUserContext = () => useContext(UserContext);
 export const useProductsContext = () => useContext(ProductsContext);
+export const useCartContext = () => useContext(CartContext);
+export const useAuthContext = () => useContext(AuthContext);

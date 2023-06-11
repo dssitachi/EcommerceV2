@@ -1,4 +1,4 @@
-import { useUserContext } from "../contexts";
+import { useCartContext } from "../contexts";
 import { useNavigate } from "react-router-dom";
 import emptyCartImg from '../assets/images/emptyCart.png';
 import CartItemCard from "../components/CartItemCard";
@@ -7,7 +7,7 @@ import CartTotal from "../components/CartTotal";
 function Cart() {
 
     const navigate = useNavigate();
-    const { cart } = useUserContext();
+    const { cart } = useCartContext();
     /**
      * This function handles operation on cart
      */

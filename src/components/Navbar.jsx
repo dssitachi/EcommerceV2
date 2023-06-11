@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineShopping, AiOutlineHeart, AiOutlineUser } from 'react-icons/ai';
-import { useUserContext } from "../contexts";
+import { useAuthContext } from "../contexts";
 
 function Navbar() {
-    const { isLoggedIn, logOut } = useUserContext();
+    const { isLoggedIn, logOut } = useAuthContext();
     const navigate = useNavigate();
 
     function navigateToCart() {
