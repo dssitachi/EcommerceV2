@@ -28,7 +28,7 @@ function CartTotal({ cart }) {
 			</div>
 
 			<div className="mt-2">
-				<button className="px-4 py-2 bg-primary rounded-md text-white transition-transform hover:scale-[1.1]"		
+				<button className="px-4 py-2 bg-primary rounded-md text-white transition-transform hover:scale-[1.05]"		
 				>Proceed to Checkout</button>
 			</div>
 
