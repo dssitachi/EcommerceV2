@@ -1,11 +1,9 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
-import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
 import Loader from "../components/Loader";
-import { displayToast } from "../utils/toast";
 import { useAuthContext } from "../contexts";
 function Signup() {
 

@@ -1,0 +1,5 @@
+export const actionTypes = {
+    INIT_PRODUCTS: 'INIT_PRODUCTS',
+    APPLY_FILTER: 'APPLY_FILTER',
+    CLEAR_FILTERS: 'CLEAR_FILTERS'
+}

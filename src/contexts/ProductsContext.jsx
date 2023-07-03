@@ -1,51 +1,60 @@
-import { createContext } from "react";
+import { createContext, useReducer } from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { displayToast } from "../utils/toast";
+import { productInitState, productsReducer } from "../reducers/productsReducer";
+import { actionTypes } from "../utils/reducerAction";
+import { useAuthContext } from ".";
 
 export const ProductsContext = createContext();
 
 function ProductsProvider({ children }) {
 
-    const [products, setProducts] = useState([]);
+    const { token } = useAuthContext();
     const [loading, setLoading] = useState(false);
-    const [filteredProducts, setFilteredProducts] = useState([]);
+    const [state, dispatch] = useReducer(productsReducer, productInitState);
 
     useEffect(() => {
         setLoading(true);
         (async () => {
             try {
                 var response = await axios.get('http://localhost:3000/products');
-                setProducts(response.data);
+                dispatch({
+                    type: actionTypes.INIT_PRODUCTS,
+                    payload: response.data
+                })
             } catch (error) {
-
+                displayToast("error", "Error occured while fetching products");
             } finally {
                 setLoading(false);
             }
         })();
-    }, []);
+    }, [token]);
 
-    useEffect(() => {
-        setFilteredProducts(products);
-    }, [products])
-
-    function filterProducts(brandFilters, categoryFilters, sortBy) {
-        var tempProducts = [...products];
-
-        if (brandFilters.length > 0)
-            tempProducts = tempProducts.filter(({ brand }) => (brandFilters.includes(brand)))
-        if (categoryFilters.length > 0)
-            tempProducts = tempProducts.filter(({ category }) => (categoryFilters.includes(category)))
-        // if (sortBy === "low")
-        //     tempProducts = tempProducts.sort((a, b) => a.price - b.price);
-        // else if (sortBy === "high")
-        //     tempProducts = tempProducts.sort((a, b) => b.price - a.price);
-        setFilteredProducts(tempProducts);
+    function applyFilter(filterType, filterValue) {
+        dispatch({
+            type: actionTypes.APPLY_FILTER,
+            payload: {
+                filterType, filterValue
+            }
+        })
     }
 
-
+    function clearFilters() {
+        dispatch({
+            type: actionTypes.CLEAR_FILTERS,
+        })
+    }
 
     return (
-        <ProductsContext.Provider value={{ products, loading, filterProducts, filteredProducts }}>
+        <ProductsContext.Provider 
+            value={{ 
+                products : state.allProducts, 
+                loading,
+                applyFilter,
+                clearFilters,
+                filters: state.filters  
+            }}>
             {children}
         </ProductsContext.Provider>
     )

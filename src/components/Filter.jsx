@@ -1,35 +1,24 @@
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import { brands, categories } from '../utils/products';
-import { ProductsContext } from "../contexts/ProductsContext";
+import { useProductsContext } from "../contexts";
 
 function Filter() {
 
     const [isOpen, setIsOpen] = useState(false);
-    const [brandFilters, setBrandFilters] = useState([]);
-    const [sortBy, setSortBy] = useState('relevance');
-    const [categoryFilters, setCategoryFilters] = useState([]);
-    const { filterProducts } = useContext(ProductsContext);
+    const { filters, applyFilter, clearFilters } = useProductsContext();
 
-
-    function handleFilter(checked, item, filters, cb) {
-        if (checked) {
-            cb([...filters, item])
+    function handleFilter(checked, item, type) {
+        if(checked) {
+            applyFilter(type, [...filters[type], item]);
         } else {
-            cb(filters.filter(x => x != item));
+            let curr = filters[type].filter(x => x != item);    
+            applyFilter(type, curr)
         }
     }
 
-    useEffect(() => {
-        filterProducts(brandFilters, categoryFilters, sortBy);
-    }, [brandFilters, categoryFilters, sortBy]);
-
-    function clearFilter() {
-        setIsOpen(false);
-    }
-
-    function applyFilter() {
-        setIsOpen(false);
-    }
+    // function applyFilter() {
+    //     // setIsOpen(false);
+    // }
 
     return (
         <>
@@ -44,8 +33,8 @@ function Filter() {
                                     return (
                                         <li key={category}>
                                             <label className="inline-flex items-center">
-                                                <input type="checkbox" className="cursor-pointer" checked={categoryFilters.includes(category)}
-                                                    onChange={function filter(e) { handleFilter(e.target.checked, category, categoryFilters, setCategoryFilters) }} />
+                                                <input type="checkbox" className="cursor-pointer" checked={filters.categories.includes(category)}
+                                                    onChange={function filter(e) { handleFilter(e.target.checked, category, 'categories') }} />
                                                 <span className="ml-2 text-sm">{category}</span>
                                             </label>
                                         </li>
@@ -64,8 +53,8 @@ function Filter() {
                                     return (
                                         <li key={brand}>
                                             <label className="inline-flex items-center">
-                                                <input type="checkbox" className="cursor-pointer" checked={brandFilters.includes(brand)}
-                                                    onChange={function filter(e) { handleFilter(e.target.checked, brand, brandFilters, setBrandFilters) }} />
+                                                <input type="checkbox" className="cursor-pointer" checked={filters.brands.includes(brand)}
+                                                    onChange={function filter(e) { handleFilter(e.target.checked, brand, 'brands') }} />
                                                 <span className="ml-2 text-sm">{brand}</span>
                                             </label>
                                         </li>
@@ -97,7 +86,8 @@ function Filter() {
                                         return (
                                             <li key={category}>
                                                 <label className="inline-flex items-center">
-                                                    <input type="checkbox" className="cursor-pointer" />
+                                                    <input type="checkbox" className="cursor-pointer" checked={filters.categories.includes(category)}
+                                                        onChange={function filter(e) { handleFilter() }} />
                                                     <span className="ml-2 text-sm">{category}</span>
                                                 </label>
                                             </li>
@@ -116,7 +106,8 @@ function Filter() {
                                         return (
                                             <li key={brand}>
                                                 <label className="inline-flex items-center">
-                                                    <input type="checkbox" className="cursor-pointer" />
+                                                    <input type="checkbox" className="cursor-pointer" checked={filters.brands.includes(brand)}
+                                                        onChange={function filter(e) { handleFilter() }} />
                                                     <span className="ml-2 text-sm">{brand}</span>
                                                 </label>
                                             </li>
@@ -128,7 +119,7 @@ function Filter() {
                     </div>
 
                     <div className={`fixed bottom-0 flex justify-around w-full mb-4 ${!isOpen ? 'hidden' : ''}`}>
-                        <button className="btn btn-secondary w-2/5" onClick={clearFilter}>Clear Filter</button>
+                        <button className="btn btn-secondary w-2/5" onClick={clearFilters}>Clear Filter</button>
                         <button className="btn btn-primary w-2/5" onClick={applyFilter}> See Results</button>
                     </div>
                 </div>

@@ -5,14 +5,13 @@ import './index.css'
 import { ProductsContextProvider, AuthContextProvider, CartContextProvider } from './contexts/index.js'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-
-    <ProductsContextProvider>
-        <AuthContextProvider>
+    <AuthContextProvider>
+        <ProductsContextProvider>
             <CartContextProvider>
                 <React.StrictMode>
                     <App />
                 </React.StrictMode>
             </CartContextProvider>
-        </AuthContextProvider>
-    </ProductsContextProvider>,
+        </ProductsContextProvider>
+    </AuthContextProvider>,
 )
