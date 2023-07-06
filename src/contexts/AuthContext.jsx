@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
-import axios from "axios";
 import { getCookie, setCookie, deleteCookie } from "../hooks/useCookie";
 import { displayToast } from "../utils/toast";
+import { loginService, signupService } from "../services/apiServices";
 
 export const AuthContext = createContext();
 
@@ -22,7 +22,7 @@ function AuthProvider({children}) {
     async function login(data, errorCb) {
         try {
             setLoading(true);
-            var response = await axios.post('http://localhost:3000/users/login', data);
+            var response = await loginService(data);
             setAccessToken(response.data.access_token);
             setIsLoggedIn(true);
             setCookie('accessToken', response.data.access_token);
@@ -37,7 +37,7 @@ function AuthProvider({children}) {
     async function signUp(data, errorCb) {
         try {
             setLoading(true);
-            var response = await axios.post('http://localhost:3000/users/signup', data);
+            var response = await signupService(data);
             setIsLoggedIn(true);
             setCookie('accessToken', response.data.access_token);
             displayToast("success", "Account Created Successfully");

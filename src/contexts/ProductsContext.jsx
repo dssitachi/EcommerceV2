@@ -1,10 +1,10 @@
 import { createContext, useReducer } from "react";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { displayToast } from "../utils/toast";
 import { productInitState, productsReducer } from "../reducers/productsReducer";
 import { actionTypes } from "../utils/reducerAction";
 import { useAuthContext } from ".";
+import { productsService } from "../services/apiServices";
 
 export const ProductsContext = createContext();
 
@@ -18,7 +18,7 @@ function ProductsProvider({ children }) {
         setLoading(true);
         (async () => {
             try {
-                var response = await axios.get('http://localhost:3000/products');
+                var response = await productsService();
                 dispatch({
                     type: actionTypes.INIT_PRODUCTS,
                     payload: response.data
