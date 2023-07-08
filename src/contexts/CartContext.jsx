@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { useAuthContext } from ".";
 import { getAxiosClient } from "../utils/fetcher";
 import { displayToast } from '../utils/toast';
+import { getUserCart } from "../services/apiServices";
 
 export const CartContext = createContext();
 
@@ -13,9 +14,9 @@ function CartProvider({children}) {
 
     useEffect(function () { 
         if(accessToken) {
-            (async function getUserCart() {
+            (async function () {
                 try {
-                    const response = await getAxiosClient(accessToken).get('/users/cart');
+                    const response = await getUserCart(accessToken);
                     setCart(response.data);
                 } catch(error) {
 

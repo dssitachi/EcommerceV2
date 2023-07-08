@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getAxiosClient } from "../utils/fetcher";
 import Loader from "../components/Loader";
 import { useAuthContext, useCartContext, useProductsContext } from "../contexts";
 import { displayToast } from "../utils/toast";
+import { updateCart } from "../services/apiServices";
 
 function ProductDetails() {
     const { id } = useParams();
@@ -15,6 +15,9 @@ function ProductDetails() {
     const product = products.find(function currProduct(p) {
         return id == p.id;
     })
+    const isPresentInCart = cart.some(function (cartItem) {
+        return cartItem.item.id == product.id;
+    })
 
     async function addToCart() {
         console.log(accessToken)
@@ -25,7 +28,7 @@ function ProductDetails() {
         
         try {
             setIsLoading(true);
-            let response = await getAxiosClient(accessToken).post('/users/addToCart', { item: product, count: 1 });
+            let response = await updateCart({ item: product, count: 1 }, accessToken);
             console.log([...cart, { item: product, count: 1 }])
             setCart([...cart, { item: product, count: 1 }])
             displayToast("success", "Product added to Cart")
@@ -78,9 +81,16 @@ function ProductDetails() {
                         </div>
 
                         <div>
+                        { 
+                            isPresentInCart ? 
+                            <button className="px-4 py-2 bg-primary rounded-md text-white transition-transform hover:scale-[1.1]"
+                            onClick={() => { navigate('/cart') }}
+                            >Go to Cart</button>
+                            :
                             <button className="px-4 py-2 bg-primary rounded-md text-white transition-transform hover:scale-[1.1]"
                             onClick={addToCart}
                             >Add to Cart</button>
+                            }
                         </div>
                     </section>
                 </main>
