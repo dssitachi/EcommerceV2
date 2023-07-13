@@ -35,7 +35,7 @@ export function productsReducer(state, action) {
 export const productInitState = {
     allProducts: [],
     categoryList: ["Headphones", "Speakers", "Earbuds"],
-    brandList: ["Boat", "Seinheisser", "Bose", "Sony"],
+    brandList: ["Boat", "Sennheiser", "Bose", "Sony"],
     filters: {
         brands: [],
         categories: [],
