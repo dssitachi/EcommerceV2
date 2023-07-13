@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { useAuthContext } from ".";
 import { getAxiosClient } from "../utils/fetcher";
 import { displayToast } from '../utils/toast';
-import { getUserCart } from "../services/apiServices";
+import { getUserCart, modifyCartAtOnce } from "../services/apiServices";
 
 export const CartContext = createContext();
 
@@ -40,7 +40,7 @@ function CartProvider({children}) {
 
 		try {
 			setDisableCart(true);
-			let response = await getAxiosClient(accessToken).post('/users/updateCart', updatedCart);
+            await modifyCartAtOnce(updatedCart, accessToken);
 			setCart(updatedCart);
 		} catch (error) {
 			displayToast("error", "Error occured while adding to Cart");

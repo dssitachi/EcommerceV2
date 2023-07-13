@@ -5,6 +5,7 @@ import {
     PRODUCTS_URL,
     CART_URL,
     ADD_TO_CART_URL,
+    MODIFY_CART_URL,
 } from "./apiUrls";
 
 export function loginService(data) {
@@ -30,6 +31,15 @@ export function getUserCart(accessToken) {
 
 export function updateCart(product, accessToken) {
     return axios.post(ADD_TO_CART_URL, product, {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+        },
+    });
+}
+
+export function modifyCartAtOnce(cart, accessToken) {
+    return axios.post(MODIFY_CART_URL, cart, {
         headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${accessToken}`,
