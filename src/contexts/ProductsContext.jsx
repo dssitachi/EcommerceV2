@@ -53,6 +53,8 @@ function ProductsProvider({ children }) {
                 loading,
                 applyFilter,
                 clearFilters,
+                brands: state.brandList,
+                categories: state.categoryList,
                 filters: state.filters  
             }}>
             {children}

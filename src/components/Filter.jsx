@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { brands, categories } from '../utils/products';
 import { useProductsContext } from "../contexts";
 
 function Filter() {
 
     const [isOpen, setIsOpen] = useState(false);
-    const { filters, applyFilter, clearFilters } = useProductsContext();
+    const { filters, applyFilter, clearFilters, brands, categories } = useProductsContext();
 
     function handleFilter(checked, item, type) {
         if(checked) {
