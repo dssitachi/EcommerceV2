@@ -9,7 +9,7 @@ function Categories() {
     const navigate = useNavigate();
 
     function filterAndNavigate(type) {
-        applyFilter('categories', type);
+        applyFilter('categories', [type]);
         navigate('/products');
     }
     
